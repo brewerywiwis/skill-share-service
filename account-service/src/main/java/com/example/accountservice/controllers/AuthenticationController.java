@@ -1,10 +1,10 @@
 package com.example.accountservice.controllers;
 
 import com.example.accountservice.entities.User;
-import com.example.accountservice.types.requests.SignInRequest;
-import com.example.accountservice.types.responses.SignInResponse;
 import com.example.accountservice.services.jwt.JwtService;
 import com.example.accountservice.services.user.UserService;
+import com.example.accountservice.types.requests.SignInRequest;
+import com.example.accountservice.types.responses.SignInResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
