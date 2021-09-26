@@ -4,14 +4,13 @@ import com.example.accountservice.entities.User;
 import com.example.accountservice.services.jwt.JwtService;
 import com.example.accountservice.services.user.UserService;
 import com.example.accountservice.types.requests.SignInRequest;
+import com.example.accountservice.types.responses.AuthenticateResponse;
 import com.example.accountservice.types.responses.SignInResponse;
 import com.example.accountservice.utils.BcryptUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -43,4 +42,9 @@ public class AuthenticationController {
         return new ResponseEntity<>(r, HttpStatus.CREATED);
     }
 
+    @GetMapping("/api/v1/authenticate/{token}")
+    public ResponseEntity<AuthenticateResponse> authenticate(@PathVariable String token) {
+        boolean status = jwtService.verifyToken(token);
+        return new ResponseEntity<>(new AuthenticateResponse(token, status), HttpStatus.OK);
+    }
 }
