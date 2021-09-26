@@ -1,6 +1,10 @@
 package com.example.accountservice.entities;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Hibernate;
 import org.hibernate.validator.constraints.Length;
 
@@ -10,6 +14,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Objects;
 import java.util.UUID;
 
+@Slf4j
 @Table(name = "user")
 @Entity
 @Getter
@@ -58,6 +63,9 @@ public class User {
 
     @Column(name = "active", nullable = false)
     private Boolean active = false;
+
+    @Embedded
+    private DateTimeAudit dateTimeAudit = new DateTimeAudit();
 
     @Override
     public boolean equals(Object o) {

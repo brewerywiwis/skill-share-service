@@ -2,6 +2,7 @@ package com.example.accountservice.services.user;
 
 import com.example.accountservice.entities.User;
 import com.example.accountservice.repositories.UserRepository;
+import com.example.accountservice.types.requests.SearchUserRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -35,6 +36,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUser(String username) {
         return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User cannot be founded"));
+    }
+
+    @Override
+    public User getUserByCriteria(SearchUserRequest criteria) {
+        return null;
     }
 
 }
