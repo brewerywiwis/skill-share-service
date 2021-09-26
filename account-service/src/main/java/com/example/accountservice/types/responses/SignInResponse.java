@@ -1,12 +1,10 @@
 package com.example.accountservice.types.responses;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
+@Data
 @AllArgsConstructor
 public class SignInResponse {
-    @Getter
-    @Setter
     private String token;
 }

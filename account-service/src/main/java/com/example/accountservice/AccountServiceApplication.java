@@ -10,12 +10,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@OpenAPIDefinition(info = @Info(title = "Skill share: Account service API", version = "1.0"))
+@OpenAPIDefinition(info = @Info(title = "Skill Share: Account service API", version = "1.0"))
 @SecurityScheme(name = SecurityName.SKILLSHAREAPI, scheme = "bearer", type = SecuritySchemeType.HTTP, in = SecuritySchemeIn.HEADER)
 public class AccountServiceApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(AccountServiceApplication.class, args);
     }
-
 }

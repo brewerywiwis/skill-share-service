@@ -45,7 +45,7 @@ public class JwtService {
         try {
             JWTVerifier verifier = JWT.require(algorithm)
                     .withIssuer(issuerName)
-                    .build(); //Reusable verifier instance
+                    .build();
             DecodedJWT jwt = verifier.verify(token);
             return true;
         } catch (JWTVerificationException exception) {
@@ -57,7 +57,7 @@ public class JwtService {
         try {
             JWTVerifier verifier = JWT.require(algorithm)
                     .withIssuer(issuerName)
-                    .build(); //Reusable verifier instance
+                    .build();
             DecodedJWT decodedJWT = verifier.verify(token);
             String username = decodedJWT.getClaim("username").asString();
             String roles = decodedJWT.getClaim("roles").asString();

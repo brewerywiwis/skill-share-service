@@ -26,12 +26,14 @@ public class AuthenticationController {
         this.jwtService = jwtService;
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/api/v1/signup")
     public ResponseEntity<User> signUp(@RequestBody User user) {
         User result = userService.saveUser(user);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @PostMapping("/api/v1/signin")
     public ResponseEntity<SignInResponse> signIn(@RequestBody SignInRequest user, HttpServletRequest request) throws IllegalArgumentException {
         User result = userService.getUser(user.getUsername());
@@ -39,9 +41,10 @@ public class AuthenticationController {
             throw new IllegalArgumentException("Cannot logged in with this username/password");
         }
         SignInResponse r = new SignInResponse(jwtService.generateToken(result.getUsername(), result.getRole().toString(), request));
-        return new ResponseEntity<>(r, HttpStatus.CREATED);
+        return new ResponseEntity<>(r, HttpStatus.OK);
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/api/v1/authenticate/{token}")
     public ResponseEntity<AuthenticateResponse> authenticate(@PathVariable String token) {
         boolean status = jwtService.verifyToken(token);
