@@ -37,9 +37,9 @@ public class AuthenticationController {
     public ResponseEntity<SignInResponse> signIn(@RequestBody SignInRequest user, HttpServletRequest request) throws IllegalArgumentException {
         User result = userService.getUser(user.getUsername());
         if (!BcryptUtil.validate(user.getPassword(), result.getPassword())) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Cannot logged in with this username/password");
         }
-        SignInResponse r = new SignInResponse(jwtService.generateToken(result.getUsername(), result.getRole(), request));
+        SignInResponse r = new SignInResponse(jwtService.generateToken(result.getUsername(), result.getRole().toString(), request));
         return new ResponseEntity<>(r, HttpStatus.CREATED);
     }
 

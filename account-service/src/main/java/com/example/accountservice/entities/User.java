@@ -1,6 +1,7 @@
 package com.example.accountservice.entities;
 
 import com.example.accountservice.entities.audits.DateTimeAudit;
+import com.example.accountservice.types.enums.RoleEnum;
 import com.example.accountservice.utils.BcryptUtil;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -60,8 +61,9 @@ public class User {
     @Column(name = "email", nullable = false, unique = true, length = 50)
     private String email;
 
+
     @Column(name = "role", nullable = false)
-    private String role;
+    private RoleEnum role;
 
     @Column(name = "active", nullable = false)
     private Boolean active = false;

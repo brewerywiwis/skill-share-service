@@ -1,7 +1,6 @@
 package com.example.accountservice.types;
 
 import com.example.accountservice.entities.User;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +19,7 @@ public class UserPrincipal implements UserDetails {
         this.username = user.getUsername();
         this.password = "";
         this.active = user.getActive();
-        this.authorities = List.of(new SimpleGrantedAuthority(user.getRole()));
+        this.authorities = List.of(new SimpleGrantedAuthority(user.getRole().toString()));
     }
 
     @Override
