@@ -24,7 +24,6 @@ public class UserController {
     @SecurityRequirement(name = SecurityName.SKILLSHAREAPI)
     @GetMapping("/api/v1/users")
     public List<User> getAllUser(@AuthenticationPrincipal UserPrincipal principle) {
-        System.out.println(principle.toString());
         return userService.getAllUser();
     }
 }
