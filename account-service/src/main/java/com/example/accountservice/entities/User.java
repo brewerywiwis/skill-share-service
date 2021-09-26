@@ -1,5 +1,7 @@
 package com.example.accountservice.entities;
 
+import com.example.accountservice.entities.audits.DateTimeAudit;
+import com.example.accountservice.utils.BcryptUtil;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -33,9 +35,9 @@ public class User {
     @Column(name = "username", nullable = false, unique = true, length = 30)
     private String username;
 
-    @Length(message = "password must has length between 6-30", min = 6, max = 30)
+    @Length(message = "password must has length between 6-500", min = 6, max = 500)
     @NotNull(message = "password cannot be null")
-    @Column(name = "password", nullable = false, length = 30)
+    @Column(name = "password", nullable = false, length = 500)
     private String password;
 
 
@@ -66,6 +68,15 @@ public class User {
 
     @Embedded
     private DateTimeAudit dateTimeAudit = new DateTimeAudit();
+
+    @PrePersist
+    @PreUpdate
+    private void encodePassword() {
+        if (this.password.length() < 6) {
+            throw new IllegalArgumentException();
+        }
+        setPassword(BcryptUtil.encode(getPassword()));
+    }
 
     @Override
     public boolean equals(Object o) {

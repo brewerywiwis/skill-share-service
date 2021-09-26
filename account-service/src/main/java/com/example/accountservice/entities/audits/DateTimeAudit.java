@@ -1,4 +1,4 @@
-package com.example.accountservice.entities;
+package com.example.accountservice.entities.audits;
 
 import com.example.accountservice.types.UserPrincipal;
 import lombok.Getter;
