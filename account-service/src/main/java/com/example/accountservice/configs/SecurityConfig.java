@@ -1,6 +1,7 @@
 package com.example.accountservice.configs;
 
 import com.example.accountservice.filters.JwtTokenFilter;
+import com.example.accountservice.types.enums.RoleEnum;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/v1/signup").permitAll()
                 .antMatchers("/api/v1/authenticate/*").permitAll()
                 .antMatchers("/api/v1/health").permitAll()
-                .antMatchers("/api/v1/**/*").hasAuthority("basic")
+                .antMatchers("/api/v1/**/*").hasAuthority(RoleEnum.BASIC.toString())
                 .anyRequest().permitAll();
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
     }
