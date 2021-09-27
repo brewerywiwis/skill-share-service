@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -28,10 +27,14 @@ public class UserController {
         return userService.getAllUser();
     }
 
+    //    @SecurityRequirement(name = SecurityName.SKILLSHAREAPI)
+//    @GetMapping("/api/v1/user")
+//    public List<User> getUserByCriteria(@RequestBody User userCriteria) {
+//        return userService.getAllUser();
+//    }
     @SecurityRequirement(name = SecurityName.SKILLSHAREAPI)
-    @GetMapping("/api/v1/user")
-    public List<User> getUserByCriteria(@RequestBody User userCriteria) {
-        return userService.getAllUser();
-
+    @GetMapping("/api/v1/me")
+    public User getMe(@AuthenticationPrincipal UserPrincipal user) {
+        return userService.getUser(user.getUsername());
     }
 }

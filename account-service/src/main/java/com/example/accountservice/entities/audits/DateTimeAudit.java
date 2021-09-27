@@ -21,16 +21,16 @@ import java.time.Instant;
 @Setter
 public class DateTimeAudit {
 
-    @Column
+    @Column(name = "created_at")
     private Instant createdAt;
 
-    @Column
+    @Column(name = "updated_at")
     private Instant updatedAt;
 
-    @Column
+    @Column(name = "created_by")
     private String createdBy;
 
-    @Column
+    @Column(name = "updated_by")
     private String updatedBy;
 
     @PrePersist

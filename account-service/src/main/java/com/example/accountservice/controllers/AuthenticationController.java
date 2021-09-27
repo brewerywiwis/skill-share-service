@@ -4,9 +4,11 @@ import com.example.accountservice.entities.User;
 import com.example.accountservice.services.jwt.JwtService;
 import com.example.accountservice.services.user.UserService;
 import com.example.accountservice.types.requests.SignInRequest;
+import com.example.accountservice.types.requests.SignUpRequest;
 import com.example.accountservice.types.responses.AuthenticateResponse;
 import com.example.accountservice.types.responses.SignInResponse;
 import com.example.accountservice.utils.BcryptUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
+@Slf4j
 @RestController
 public class AuthenticationController {
 
@@ -28,8 +31,9 @@ public class AuthenticationController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/api/v1/signup")
-    public ResponseEntity<User> signUp(@RequestBody User user) {
-        User result = userService.saveUser(user);
+    public ResponseEntity<User> signUp(@RequestBody SignUpRequest user) {
+        User data = new User(user.getUsername(), user.getPassword(), user.getFname(), user.getLname(), user.getTel(), user.getEmail());
+        User result = userService.saveUser(data);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 

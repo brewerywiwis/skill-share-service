@@ -3,6 +3,7 @@ package com.example.accountservice.entities;
 import com.example.accountservice.entities.audits.DateTimeAudit;
 import com.example.accountservice.types.enums.RoleEnum;
 import com.example.accountservice.utils.BcryptUtil;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -36,6 +37,7 @@ public class User {
     @Column(name = "username", nullable = false, unique = true, length = 30)
     private String username;
 
+    @JsonIgnore
     @Length(message = "password must has length between 6-500", min = 6, max = 500)
     @NotNull(message = "password cannot be null")
     @Column(name = "password", nullable = false, length = 500)
@@ -63,13 +65,23 @@ public class User {
 
 
     @Column(name = "role", nullable = false)
-    private RoleEnum role;
+    private RoleEnum role = RoleEnum.BASIC;
+
 
     @Column(name = "active", nullable = false)
-    private Boolean active = false;
+    private Boolean active = true;
 
     @Embedded
     private DateTimeAudit dateTimeAudit = new DateTimeAudit();
+
+    public User(String username, String password, String fname, String lname, String tel, String email) {
+        this.username = username;
+        this.password = password;
+        this.fname = fname;
+        this.lname = lname;
+        this.tel = tel;
+        this.email = email;
+    }
 
     @PrePersist
     @PreUpdate
