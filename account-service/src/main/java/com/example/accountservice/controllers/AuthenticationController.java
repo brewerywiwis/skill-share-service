@@ -55,7 +55,6 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticateResponse> authenticate(@PathVariable String token) {
         boolean status = jwtService.verifyToken(token);
         TokenPayload tokenPayload = jwtService.decodeToken(token);
-        System.out.println(tokenPayload);
         return new ResponseEntity<>(new AuthenticateResponse(token, status, tokenPayload), HttpStatus.OK);
     }
 }

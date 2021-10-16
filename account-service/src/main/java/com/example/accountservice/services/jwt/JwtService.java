@@ -69,7 +69,6 @@ public class JwtService {
             }
             return new TokenPayload(uid, username, List.of(roles));
         } catch (JWTVerificationException | IllegalArgumentException exception) {
-            System.out.println(exception);
             return null;
         }
     }
