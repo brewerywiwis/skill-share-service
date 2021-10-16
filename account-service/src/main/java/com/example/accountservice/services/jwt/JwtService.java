@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class JwtService {
@@ -32,12 +33,13 @@ public class JwtService {
         this.algorithm = Algorithm.HMAC256(secretKey.getBytes());
     }
 
-    public String generateToken(String username, String role, HttpServletRequest request) {
+    public String generateToken(UUID uid, String username, List<String> roles, HttpServletRequest request) {
         return JWT.create().withSubject("skill share access token")
                 .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
                 .withIssuer(issuerName)
+                .withClaim("uid", uid.toString())
                 .withClaim("username", username)
-                .withClaim("roles", role)
+                .withClaim("roles", roles)
                 .sign(algorithm);
     }
 
@@ -59,13 +61,15 @@ public class JwtService {
                     .withIssuer(issuerName)
                     .build();
             DecodedJWT decodedJWT = verifier.verify(token);
+            String uid = decodedJWT.getClaim("uid").asString();
             String username = decodedJWT.getClaim("username").asString();
-            String roles = decodedJWT.getClaim("roles").asString();
-            if (username == null || roles == null) {
+            String[] roles = decodedJWT.getClaim("roles").asArray(String.class);
+            if (uid == null ||  username == null || roles.length == 0) {
                 throw new IllegalArgumentException();
             }
-            return new TokenPayload(username, List.of(roles));
+            return new TokenPayload(uid, username, List.of(roles));
         } catch (JWTVerificationException | IllegalArgumentException exception) {
+            System.out.println(exception);
             return null;
         }
     }
