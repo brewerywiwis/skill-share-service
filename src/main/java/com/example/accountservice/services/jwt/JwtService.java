@@ -35,7 +35,7 @@ public class JwtService {
 
     public String generateToken(UUID uid, String username, List<String> roles, HttpServletRequest request) {
         return JWT.create().withSubject("skill share access token")
-                .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
+                .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 6000))
                 .withIssuer(issuerName)
                 .withClaim("uid", uid.toString())
                 .withClaim("username", username)
